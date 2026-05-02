@@ -43,7 +43,7 @@ vim.keymap.set("n", "<leader>bd", function()
     Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
-vim.keymap.set("n", "<c-/>", function()
+vim.keymap.set({ "n", "t" }, "<c-/>", function()
     Snacks.terminal()
 end, { desc = "Toggle Terminal" })
 
@@ -63,6 +63,10 @@ end, { desc = "Goto Implementation" })
 vim.keymap.set("n", "gy", function()
     Snacks.picker.lsp_type_definitions()
 end, { desc = "Goto Type Definition" })
+
+vim.keymap.set("n", "<leader>uc", function()
+    Snacks.picker.colorschemes()
+end, { desc = "Colorschemes" })
 
 vim.keymap.set("n", "<leader>uk", function()
     Snacks.picker.keymaps()
