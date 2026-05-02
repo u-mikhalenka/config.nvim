@@ -36,10 +36,6 @@ vim.keymap.set("n", "<leader>bd", function()
   Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
-vim.keymap.set({ "n", "v" }, "<leader>gB", function()
-  Snacks.gitbrowse()
-end, { desc = "Git Browse" })
-
 vim.keymap.set("n", "<c-/>", function()
   Snacks.terminal()
 end, { desc = "Toggle Terminal" })
