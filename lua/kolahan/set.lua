@@ -30,3 +30,5 @@ vim.opt.colorcolumn = "100"
 vim.g.mapleader = ' '
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+vim.diagnostic.config({ jump = { float = true }})

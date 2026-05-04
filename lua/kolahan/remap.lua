@@ -30,7 +30,6 @@ vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {
     desc = "Rename",
 })
 
-
 -- Previous buffer
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", {
   desc = "Previous buffer",
