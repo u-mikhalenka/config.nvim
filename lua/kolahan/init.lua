@@ -1,6 +1,7 @@
 require("kolahan.set")
 require("kolahan.remap")
 require("kolahan.auto-session")
+require("kolahan.lualine")
 require("kolahan.icons")
 require("kolahan.which-key")
 require("kolahan.snacks")
