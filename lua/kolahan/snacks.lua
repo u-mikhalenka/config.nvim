@@ -53,7 +53,27 @@ vim.keymap.set("n", "gd", function()
 end, { desc = "Goto Definition" })
 
 vim.keymap.set("n", "gr", function()
-    Snacks.picker.lsp_references()
+    Snacks.picker.lsp_references({
+        unique_lines = true,
+        focus = "list",
+        transform = function(item, ctx)
+            ctx.meta.seen = ctx.meta.seen or {}
+
+            local id = table.concat({
+                item.file or "",
+                item.pos and item.pos[1] or 0,
+                item.pos and item.pos[2] or 0,
+                item.end_pos and item.end_pos[1] or 0,
+                item.end_pos and item.end_pos[2] or 0,
+            }, ":")
+
+            if ctx.meta.seen[id] then
+                return false
+            end
+            ctx.meta.seen[id] = true
+            return item
+        end,
+    })
 end, { desc = "References", nowait = true })
 
 vim.keymap.set("n", "gI", function()
@@ -97,4 +117,3 @@ end, { desc = "Document Symbols" })
 vim.keymap.set("n", "<leader>fR", function()
     Snacks.picker.resume()
 end, { desc = "Resume Picker" })
-
