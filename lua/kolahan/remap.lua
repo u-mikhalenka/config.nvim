@@ -32,12 +32,12 @@ vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {
 
 -- Previous buffer
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", {
-  desc = "Previous buffer",
+    desc = "Previous buffer",
 })
 
 -- Next buffer
 vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", {
-  desc = "Next buffer",
+    desc = "Next buffer",
 })
 
 -- Buffer navigation
@@ -45,19 +45,27 @@ vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffe
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
 vim.keymap.set("i", "<C-Space>", function()
-  local ok, blink = pcall(require, "blink.cmp")
+    local ok, blink = pcall(require, "blink.cmp")
 
-  if ok then
-    blink.show()
-  else
-    -- fallback to native LSP completion
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true),
-      "n",
-      true
-    )
-  end
+    if ok then
+        blink.show()
+    else
+        -- fallback to native LSP completion
+        vim.api.nvim_feedkeys(
+            vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true),
+            "n",
+            true
+        )
+    end
 end, { desc = "Trigger completion" })
+
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, {
+    desc = "Signature help",
+})
+
+vim.keymap.set("n", "<leader>ch", vim.lsp.buf.signature_help, {
+    desc = "Signature Help",
+})
 
 -- Windows
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go left window" })

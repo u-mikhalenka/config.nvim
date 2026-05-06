@@ -2,9 +2,12 @@
 vim.pack.add({
     { src = "https://github.com/folke/lazydev.nvim" },
     { src = "https://github.com/Saghen/blink.cmp" },
-    { src = 'https://github.com/saghen/blink.lib' },
+    { src = "https://github.com/saghen/blink.lib" },
+    { src = "https://github.com/mason-org/mason.nvim" },
+    { src = "https://github.com/neovim/nvim-lspconfig" },
 })
 
+require("mason").setup()
 require("lazydev").setup({
     library = {
 
@@ -13,16 +16,13 @@ require("lazydev").setup({
     },
 })
 
-vim.pack.add {
-    { src = 'https://github.com/neovim/nvim-lspconfig' },
-}
-
-vim.lsp.enable('lua_ls')
-vim.lsp.enable('ts_ls')
-vim.lsp.enable('angularls')
+vim.lsp.enable("cssls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("angularls")
 
 
 -- completion
-local cmp = require('blink.cmp')
+local cmp = require("blink.cmp")
 cmp.build():wait(60000)
 cmp.setup()
