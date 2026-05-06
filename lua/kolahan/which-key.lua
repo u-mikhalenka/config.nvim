@@ -3,13 +3,15 @@ vim.pack.add({
 })
 
 local wk = require("which-key")
-wk.setup({})
+wk.setup({ preset = "modern" })
 wk.add({
+    { "<leader>t", group = "Toggles" },
     { "<leader>c", group = "Code" },
-    { "<leader>f", group = "Find" },
+    { "<leader>f", group = "File/find" },
     { "<leader>s", group = "Search" },
     { "<leader>g", group = "Git" },
     { "<leader>p", group = "Project" },
     { "<leader>b", group = "Buffers" },
     { "<leader>u", group = "UI" },
+    { "<leader>w", group = "Windows" },
 })

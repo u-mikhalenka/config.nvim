@@ -59,15 +59,12 @@ vim.keymap.set("i", "<C-Space>", function()
     end
 end, { desc = "Trigger completion" })
 
-vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, {
-    desc = "Signature help",
-})
-
 vim.keymap.set("n", "<leader>ch", vim.lsp.buf.signature_help, {
     desc = "Signature Help",
 })
 
 -- Windows
+vim.keymap.set("n", "<leader>wc", "<C-w>c", { desc = "Close window" })
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go left window" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go down window" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go up window" })

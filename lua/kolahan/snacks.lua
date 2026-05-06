@@ -43,6 +43,10 @@ vim.keymap.set("n", "<leader>bd", function()
     Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
+vim.keymap.set("n", "<leader>bo", function()
+    Snacks.bufdelete.other()
+end, { desc = "Delete Other Buffers" })
+
 vim.keymap.set({ "n", "t" }, "<c-/>", function()
     Snacks.terminal()
 end, { desc = "Toggle Terminal" })
@@ -88,13 +92,13 @@ vim.keymap.set("n", "<leader>uc", function()
     Snacks.picker.colorschemes()
 end, { desc = "Colorschemes" })
 
-vim.keymap.set("n", "<leader>uk", function()
+vim.keymap.set("n", "<leader>sk", function()
     Snacks.picker.keymaps()
 end, { desc = "Keymap" })
 
 -- search/search
 
-vim.keymap.set("n", "<leader>fh", function()
+vim.keymap.set("n", "<leader>sh", function()
     Snacks.picker.help()
 end, { desc = "Help" })
 
@@ -113,6 +117,10 @@ end, { desc = "Search Word" })
 vim.keymap.set("n", "<leader>ss", function()
     Snacks.picker.lsp_symbols()
 end, { desc = "Document Symbols" })
+
+vim.keymap.set("n", "<leader>sS", function()
+    Snacks.picker.lsp_workspace_symbols()
+end, { desc = "LSP Workspace Symbols" })
 
 vim.keymap.set("n", "<leader>fR", function()
     Snacks.picker.resume()
