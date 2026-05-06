@@ -82,6 +82,9 @@ require('gitsigns').setup({
             gitsigns.blame_line({ full = true })
         end, { desc = "Blame line" })
 
+        map('n', '<leader>ghB', gitsigns.blame, { desc = "Git blame buffer" })
+
+
         map('n', '<leader>ghd', gitsigns.diffthis, { desc = "Diff this file" })
 
         map('n', '<leader>ghD', function()
