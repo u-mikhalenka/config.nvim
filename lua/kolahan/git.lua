@@ -1,7 +1,9 @@
 vim.pack.add({
     { src = "https://github.com/sindrets/diffview.nvim" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
-    { src = "https://github.com/lewis6991/gitsigns.nvim" }
+    { src = "https://github.com/lewis6991/gitsigns.nvim" },
+
+    { src = "https://github.com/neogitorg/neogit" },
 })
 
 vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", {
@@ -102,3 +104,11 @@ require('gitsigns').setup({
         map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = "Select git hunk" })
     end
 })
+
+
+-- neogit
+local neogit = require("neogit")
+neogit.setup()
+vim.keymap.set("n", "<leader>gg", function()
+    neogit.open()
+end, { desc = "Open Neogit UI" })
