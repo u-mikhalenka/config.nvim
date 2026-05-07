@@ -31,4 +31,5 @@ vim.g.mapleader = ' '
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-vim.diagnostic.config({ jump = { float = true }})
+vim.o.winborder = "single"
+vim.diagnostic.config({ jump = { float = true } })

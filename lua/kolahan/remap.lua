@@ -19,7 +19,10 @@ vim.keymap.set("n", "<leader>d", "\"_d", { desc = "Delete without yanking" })
 vim.keymap.set("v", "<leader>d", "\"_d", { desc = "Delete without yanking" })
 
 vim.keymap.set("n", "<leader>cf", function()
-    vim.lsp.buf.format()
+    require("conform").format({
+        async = true,
+        lsp_format = "fallback",
+    })
 end, { desc = "Format" })
 
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
