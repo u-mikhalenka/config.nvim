@@ -33,3 +33,23 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 vim.o.winborder = "single"
 vim.diagnostic.config({ jump = { float = true } })
+
+vim.opt.title = true
+
+local function update_terminal_title()
+    local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+    if cwd == "" then
+        cwd = vim.fn.getcwd()
+    end
+
+    vim.opt.titlestring = string.format("%s", cwd)
+end
+
+local title_group = vim.api.nvim_create_augroup("kolahan_terminal_title", { clear = true })
+
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+    group = title_group,
+    callback = update_terminal_title,
+})
+
+update_terminal_title()
