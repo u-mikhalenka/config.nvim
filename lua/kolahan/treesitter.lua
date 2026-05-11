@@ -14,7 +14,22 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 vim.pack.add { { src = "https://github.com/nvim-treesitter/nvim-treesitter" } }
 
-require("nvim-treesitter").install { "lua", "vim", "vimdoc", "javascript", "typescript", "html", "css" }
+require("nvim-treesitter").install { "lua",
+    "vim",
+    "vimdoc",
+    "javascript",
+    "typescript",
+    "html",
+    "css",
+    "bash",
+    "diff",
+    "jsdoc",
+    "markdown",
+    "regex",
+    "toml",
+    "xml",
+    "yaml"
+}
 
 vim.api.nvim_create_autocmd("FileType", {
     callback = function()

@@ -33,16 +33,6 @@ vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {
     desc = "Rename",
 })
 
--- Previous buffer
-vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", {
-    desc = "Previous buffer",
-})
-
--- Next buffer
-vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", {
-    desc = "Next buffer",
-})
-
 -- Buffer navigation
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
