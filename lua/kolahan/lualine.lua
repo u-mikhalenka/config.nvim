@@ -25,6 +25,8 @@ require('lualine').setup({
     --     lualine_z = { 'tabs' }
     -- },
     sections = {
-        lualine_x = { clients_lsp, 'encoding', 'fileformat', 'filetype' }
+        lualine_c = {},
+        lualine_b = { { "filename", path = 1 } },
+        lualine_x = { 'diagnostics', clients_lsp, 'encoding', 'fileformat', 'filetype', 'branch' }
     }
 })

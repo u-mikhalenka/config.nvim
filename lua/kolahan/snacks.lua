@@ -30,8 +30,18 @@ require('snacks').setup({
     }
 })
 
+vim.keymap.set("n", "<leader>.", function()
+    Snacks.scratch()
+end, { desc = "Toggle Scratch Buffer" })
+
+vim.keymap.set("n", "<leader>S", function()
+    Snacks.picker.scratch()
+end, { desc = "Select Scratch Buffer" })
+
 vim.keymap.set("n", "<leader><space>", function()
-    Snacks.picker.smart()
+    Snacks.picker.smart({
+        filter = { cwd = true }
+    })
 end, { desc = "Smart Find Files" })
 
 vim.keymap.set("n", "<leader>bb", function()
@@ -107,7 +117,7 @@ vim.keymap.set("n", "gy", function()
     Snacks.picker.lsp_type_definitions()
 end, { desc = "Goto Type Definition" })
 
-vim.keymap.set("n", "<leader>uc", function()
+vim.keymap.set("n", "<leader>uC", function()
     Snacks.picker.colorschemes()
 end, { desc = "Colorschemes" })
 

@@ -18,7 +18,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.showcmd = false
 
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -53,3 +53,10 @@ vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
 })
 
 update_terminal_title()
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+    callback = function()
+        (vim.hl or vim.highlight).on_yank()
+    end,
+})

@@ -1,3 +1,12 @@
+vim.keymap.set("n", "<leader>ur", "<cmd>nohlsearch<bar>diffupdate<bar>normal! <C-L><cr>", {
+    desc = "Redraw / Clear hlsearch / Diff Update",
+})
+
+vim.keymap.set({ "i", "n", "s" }, "<Esc>", function()
+    vim.cmd("nohlsearch")
+    return "<Esc>"
+end, { expr = true, desc = "Escape and Clear hlsearch" })
+
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = "Directory listing" })
 vim.keymap.set("n", "<leader>uu", "<cmd>Undotree<cr>", { desc = "Undo tree" })
 
