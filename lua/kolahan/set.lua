@@ -1,4 +1,13 @@
 require('vim._core.ui2').enable()
+vim.opt.foldtext = ""
+vim.opt.fillchars:append({
+    foldopen = "",
+    foldclose = "",
+    fold = " ",
+    foldsep = " ",
+    diff = " ",
+    eob = " ",
+})
 
 vim.opt.number = true
 vim.opt.relativenumber = true

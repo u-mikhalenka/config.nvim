@@ -12,13 +12,18 @@ local function term_nav(dir)
 end
 
 require('snacks').setup({
+    animate = { enabled = false },
     picker = { enabled = true },
     explorer = { enabled = true },
     notifier = { enabled = true },
+    indent = { enabled = false, animate = { enabled = false } },
     input = { enabled = true },
     quickfile = { enabled = true },
     bigfile = { enabled = true },
+    statuscolumn = { enabled = true },
+    image = { enabled = true },
     terminal = {
+        enabled = true,
         win = {
             keys = {
                 nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
