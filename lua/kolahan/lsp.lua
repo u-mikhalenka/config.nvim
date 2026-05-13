@@ -25,6 +25,8 @@ vim.lsp.enable("angularls")
 local cmp = require("blink.cmp")
 cmp.build():wait(60000)
 cmp.setup({
+    snippets = { preset = "luasnip" },
+    sources = { default = { "lsp", "path", "snippets", "buffer" } },
     fuzzy = { implementation = "prefer_rust_with_warning" },
     completion = {
         menu = {

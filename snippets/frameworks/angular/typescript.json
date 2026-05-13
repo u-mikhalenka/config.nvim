@@ -1,0 +1,75 @@
+{
+  "Constructor without parameters": {
+    "scope": "typescript",
+    "prefix": ["ng-ctor", "ctor"],
+    "body": ["public constructor(${1}) {${2}", "}"]
+  },
+  "ng-init": {
+    "scope": "typescript",
+    "prefix": ["ng-i", "ng-init"],
+    "body": ["public ngOnInit(): void {", "\t${2}", "}"]
+  },
+  "ng-destroy": {
+    "scope": "typescript",
+    "prefix": ["ng-d", "ng-destroy"],
+    "body": ["public ngOnDestroy(): void {", "\t${2}", "}"]
+  },
+  "ng-changes": {
+    "scope": "typescript",
+    "prefix": ["ng-c", "ng-change"],
+    "body": [
+      "public ngOnChanges(changes: SimpleChanges): void {",
+      "\t${2}",
+      "}"
+    ]
+  },
+  "test-describe": {
+    "scope": "typescript",
+    "prefix": ["t-describe"],
+    "body": ["describe('${1}', () => {", "  beforeEach(() => {", "  });", "});"]
+  },
+  "test-it": {
+    "scope": "typescript",
+    "prefix": ["t-it"],
+    "body": ["it('${1}', () => {", "\t${2}", "});"]
+  },
+  "ng-component": {
+    "prefix": "ng-cmp",
+    "body": [
+      "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';",
+      "",
+      "@Component({",
+      "\tselector: '$1-${TM_FILENAME_BASE/(.*)(\\.component)?/${1}/}',",
+      "\ttemplateUrl: './${TM_FILENAME_BASE}.html',",
+      "\tchangeDetection: ChangeDetectionStrategy.OnPush,",
+      "\tencapsulation: ViewEncapsulation.None,",
+      "\timports: [],",
+      "\thost: {",
+      "\t\tclass: '$1-${TM_FILENAME_BASE/(.*)(\\.component)?/${1}/}'",
+      "\t},",
+      "})",
+      "export class ${TM_FILENAME_BASE/(.*)(\\.component)?/${1:/pascalcase}/} {$2}"
+    ],
+    "description": "Insert component template"
+  },
+  "tryf": {
+    "scope": "typescript",
+    "prefix": ["tryf"],
+    "body": ["try {", "\t${2}", "} finally {", "\t${1}", "}"]
+  },
+  "afn": {
+    "scope": "typescript",
+    "prefix": ["afn"],
+    "body": ["() => {${1}}"]
+  },
+  "afnp": {
+    "scope": "typescript",
+    "prefix": ["afnp"],
+    "body": ["(${1}) => {${2}}"]
+  },
+  "rgn": {
+    "scope": "typescript",
+    "prefix": ["rgn"],
+    "body": ["// #region ${1}", "// #endregion"]
+  }
+}

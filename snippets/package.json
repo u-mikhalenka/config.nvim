@@ -1,0 +1,11 @@
+{
+  "name": "personal-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": ["typescript", "angular"],
+        "path": "./frameworks/angular/typescript.json"
+      }
+    ]
+  }
+}
