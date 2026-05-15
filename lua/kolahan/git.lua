@@ -6,6 +6,12 @@ vim.pack.add({
     { src = "https://github.com/neogitorg/neogit" },
 })
 
+vim.opt.diffopt:append({
+    "algorithm:histogram",
+    "indent-heuristic",
+    "linematch:60",
+})
+
 vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", {
     desc = "Git diff working tree",
 })
@@ -14,7 +20,11 @@ vim.keymap.set("n", "<leader>gD", "<cmd>DiffviewOpen HEAD~1..HEAD<cr>", {
     desc = "Git diff last commit",
 })
 
-vim.keymap.set("n", "<leader>gm", "<cmd>DiffviewOpen origin/main...HEAD<cr>", {
+vim.keymap.set("n", "<leader>gm", "<cmd>DiffviewOpen master..<cr>", {
+    desc = "Git diff against master",
+})
+
+vim.keymap.set("n", "<leader>gM", "<cmd>DiffviewOpen main..<cr>", {
     desc = "Git diff against main",
 })
 
