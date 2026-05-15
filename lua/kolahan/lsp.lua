@@ -12,7 +12,7 @@ require("lazydev").setup({
     library = {
 
         -- Optional: always load Snacks types if you use Snacks a lot
-        -- "snacks.nvim",
+        "snacks.nvim",
     },
 })
 
@@ -29,6 +29,9 @@ cmp.setup({
     sources = { default = { "lsp", "path", "snippets", "buffer" } },
     fuzzy = { implementation = "prefer_rust_with_warning" },
     completion = {
+        trigger = {
+            show_on_keyword = true,
+        },
         menu = {
             draw = {
                 columns = {
