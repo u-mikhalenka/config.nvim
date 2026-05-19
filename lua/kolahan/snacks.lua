@@ -81,9 +81,28 @@ vim.keymap.set("n", "<leader>bo", function()
     Snacks.bufdelete.other()
 end, { desc = "Delete Other Buffers" })
 
+local last_terminal_count = 1
+
+local function toggle_terminal_count(count)
+    last_terminal_count = count
+    Snacks.terminal(nil, { count = count })
+end
+
 vim.keymap.set({ "n", "t" }, "<c-/>", function()
-    Snacks.terminal()
+    if vim.v.count > 0 then
+        last_terminal_count = vim.v.count
+    elseif type(vim.b.snacks_terminal) == "table" and vim.b.snacks_terminal.id then
+        last_terminal_count = vim.b.snacks_terminal.id
+    end
+
+    Snacks.terminal(nil, { count = last_terminal_count })
 end, { desc = "Toggle Terminal" })
+
+for i = 1, 5 do
+    vim.keymap.set({ "n", "t" }, "<A-" .. i .. ">", function()
+        toggle_terminal_count(i)
+    end, { desc = "Toggle Terminal " .. i })
+end
 
 -- lsp mappings
 vim.keymap.set("n", "gd", function()
