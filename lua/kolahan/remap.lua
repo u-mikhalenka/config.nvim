@@ -20,9 +20,26 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set("x", "<leader>p", "\"_dP", { desc = "Paste without overwriting clipboard" })
 
-vim.keymap.set("n", "<leader>y", "\"+y", { desc = "Yank to system clipboard" })
-vim.keymap.set("v", "<leader>y", "\"+y", { desc = "Yank to system clipboard" })
-vim.keymap.set("n", "<leader>Y", "\"+Y", { desc = "Yank to system clipboard" })
+local yank = require("kolahan.utils.yank")
+vim.keymap.set('n', '<leader>ya', function()
+    yank.yank_path(yank.get_buffer_absolute(), 'absolute')
+end, { desc = '[Y]ank [A]bsolute path to clipboard' })
+
+vim.keymap.set('n', '<leader>yr', function()
+    yank.yank_path(yank.get_buffer_cwd_relative(), 'relative')
+end, { desc = '[Y]ank [R]elative path to clipboard' })
+
+vim.keymap.set('v', '<leader>ya', function()
+    yank.yank_visual_with_path(yank.get_buffer_absolute(), 'absolute')
+end, { desc = '[Y]ank selection with [A]bsolute path' })
+
+vim.keymap.set('v', '<leader>yr', function()
+    yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), 'relative')
+end, { desc = '[Y]ank selection with [R]elative path' })
+
+vim.keymap.set("n", "<leader>yy", "\"+y", { desc = "[Y]ank to s[y]stem clipboard" })
+vim.keymap.set("v", "<leader>yy", "\"+y", { desc = "[Y]ank to s[y]stem clipboard" })
+vim.keymap.set("n", "<leader>YY", "\"+Y", { desc = "[Y]ank to s[y]stem clipboard" })
 
 vim.keymap.set("n", "<leader>d", "\"_d", { desc = "Delete without yanking" })
 vim.keymap.set("v", "<leader>d", "\"_d", { desc = "Delete without yanking" })
