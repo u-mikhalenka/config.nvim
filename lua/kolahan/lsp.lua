@@ -21,6 +21,38 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("angularls")
 
+local function restart_all_lsp()
+    local clients = vim.lsp.get_clients()
+    if #clients == 0 then
+        vim.notify("No active LSP clients", vim.log.levels.INFO)
+        return
+    end
+
+    for _, client in ipairs(clients) do
+        client:stop(true)
+    end
+
+    vim.defer_fn(function()
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.api.nvim_buf_is_valid(buf)
+                and vim.bo[buf].buflisted
+                and vim.bo[buf].buftype == ""
+            then
+                vim.api.nvim_exec_autocmds("FileType", {
+                    buffer = buf,
+                    modeline = false,
+                })
+            end
+        end
+
+        vim.notify("Restarted all LSP clients", vim.log.levels.INFO)
+    end, 200)
+end
+
+vim.api.nvim_create_user_command("LspRestartAll", restart_all_lsp, {
+    desc = "Restart all LSP clients for all listed buffers",
+})
+
 -- completion
 local cmp = require("blink.cmp")
 cmp.build():wait(60000)

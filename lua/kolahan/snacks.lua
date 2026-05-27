@@ -81,6 +81,10 @@ vim.keymap.set("n", "<leader>bo", function()
     Snacks.bufdelete.other()
 end, { desc = "Delete Other Buffers" })
 
+vim.keymap.set("n", '<leader>s"', function()
+    Snacks.picker.registers()
+end, { desc = "Registers" })
+
 local last_terminal_count = 1
 
 local function toggle_terminal_count(count)

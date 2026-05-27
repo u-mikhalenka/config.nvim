@@ -12,6 +12,48 @@ vim.opt.diffopt:append({
     "linematch:60",
 })
 
+local diffview_actions = require("diffview.actions")
+local diffview_fold_descriptions = {
+    za = "Toggle fold",
+    zA = "Toggle folds recursively",
+    ze = "Scroll cursor to screen end",
+    zE = "Eliminate all folds",
+    zo = "Open fold",
+    zc = "Close fold",
+    zO = "Open folds recursively",
+    zC = "Close folds recursively",
+    zr = "Reduce fold level",
+    zm = "Increase fold level",
+    zR = "Open all folds",
+    zM = "Close all folds",
+    zv = "Open folds for cursor line",
+    zx = "Update folds",
+    zX = "Update folds and close",
+    zn = "Disable folding",
+    zN = "Enable folding",
+    zi = "Toggle folding",
+}
+
+local diffview_fold_keymaps = vim.tbl_map(function(mapping)
+    return {
+        mapping[1],
+        mapping[2],
+        mapping[3],
+        { desc = diffview_fold_descriptions[mapping[2]] },
+    }
+end, diffview_actions.compat.fold_cmds)
+
+require("diffview").setup({
+    hooks = {
+        diff_buf_win_enter = function()
+            vim.cmd("normal! zR")
+        end,
+    },
+    keymaps = {
+        view = diffview_fold_keymaps,
+    },
+})
+
 vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", {
     desc = "Git diff working tree",
 })
@@ -20,11 +62,11 @@ vim.keymap.set("n", "<leader>gD", "<cmd>DiffviewOpen HEAD~1..HEAD<cr>", {
     desc = "Git diff last commit",
 })
 
-vim.keymap.set("n", "<leader>gm", "<cmd>DiffviewOpen master..<cr>", {
+vim.keymap.set("n", "<leader>gm", "<cmd>DiffviewOpen master<cr>", {
     desc = "Git diff against master",
 })
 
-vim.keymap.set("n", "<leader>gM", "<cmd>DiffviewOpen main..<cr>", {
+vim.keymap.set("n", "<leader>gM", "<cmd>DiffviewOpen main<cr>", {
     desc = "Git diff against main",
 })
 
@@ -40,6 +82,17 @@ vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<cr>", {
     desc = "Close diff view",
 })
 
+vim.keymap.set("n", "<F7>", function()
+    vim.cmd.normal({ "]c", bang = true })
+end, {
+    desc = "Diffview next change",
+})
+
+vim.keymap.set("n", "<F19>", function()
+    vim.cmd.normal({ "[c", bang = true })
+end, {
+    desc = "Diffview previous change",
+})
 
 -- gitsigns
 require('gitsigns').setup({
