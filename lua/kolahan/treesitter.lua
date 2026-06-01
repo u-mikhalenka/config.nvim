@@ -12,7 +12,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
     end,
 })
 
-vim.pack.add { { src = "https://github.com/nvim-treesitter/nvim-treesitter" } }
+vim.pack.add {
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://github.com/windwp/nvim-ts-autotag" },
+}
 
 require("nvim-treesitter").install { "lua",
     "vim",
@@ -30,6 +33,8 @@ require("nvim-treesitter").install { "lua",
     "xml",
     "yaml"
 }
+
+require("nvim-ts-autotag").setup()
 
 vim.api.nvim_create_autocmd("FileType", {
     callback = function()

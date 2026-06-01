@@ -22,6 +22,7 @@ require('snacks').setup({
     bigfile = { enabled = true },
     statuscolumn = { enabled = true },
     image = { enabled = true },
+    words = { enabled = true },
     terminal = {
         enabled = true,
         win = {

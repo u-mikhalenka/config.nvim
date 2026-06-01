@@ -61,6 +61,7 @@ cmp.setup({
     sources = { default = { "lsp", "path", "snippets", "buffer" } },
     fuzzy = { implementation = "prefer_rust_with_warning" },
     completion = {
+        ghost_text = { enabled = true },
         trigger = {
             show_on_keyword = true,
         },
