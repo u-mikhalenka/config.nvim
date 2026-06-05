@@ -3,7 +3,9 @@ local map = cfg.map;
 cfg.pack_add({
     src = "https://github.com/gbprod/yanky.nvim",
     setup = function()
-        require('yanky').setup({})
+        require('yanky').setup({
+            highlight = { timer = 250 },
+        })
         map({ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" })
         map({ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" })
         map({ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" })

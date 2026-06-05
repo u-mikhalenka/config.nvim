@@ -65,13 +65,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
 
 update_terminal_title()
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
-    callback = function()
-        (vim.hl or vim.highlight).on_yank()
-    end,
-})
-
 vim.opt.autoread = true
 vim.opt.updatetime = 1000
 
