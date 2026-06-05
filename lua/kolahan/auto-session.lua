@@ -6,7 +6,7 @@ vim.pack.add({
 })
 
 require("auto-session").setup({
-    auto_restore = false,
+    auto_restore = true,
     git_use_branch_name = true,
     purge_after_minutes = 14400
 })

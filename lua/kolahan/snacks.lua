@@ -128,6 +128,15 @@ vim.keymap.set({ "n", "t" }, "<c-/>", function()
     Snacks.terminal(nil, { count = last_terminal_count })
 end, { desc = "Toggle Terminal" })
 
+vim.keymap.set({ "n", "t" }, "<A-f>", function()
+    Snacks.terminal(nil, {
+        count = 99,
+        win = {
+            position = "float",
+        },
+    })
+end, { desc = "Toggle Floating Terminal" })
+
 for i = 1, 5 do
     vim.keymap.set({ "n", "t" }, "<A-" .. i .. ">", function()
         toggle_terminal_count(i)
