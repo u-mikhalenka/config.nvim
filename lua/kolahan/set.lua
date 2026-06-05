@@ -40,6 +40,7 @@ vim.opt.colorcolumn = "100"
 vim.g.mapleader = ' '
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.diffopt = "internal,filler,closeoff,indent-heuristic,inline:char,linematch:60,algorithm:myers,iwhite"
 
 vim.o.winborder = "single"
 vim.diagnostic.config({ jump = { float = true } })

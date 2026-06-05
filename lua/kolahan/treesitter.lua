@@ -17,7 +17,8 @@ vim.pack.add {
     { src = "https://github.com/windwp/nvim-ts-autotag" },
 }
 
-require("nvim-treesitter").install { "lua",
+require("nvim-treesitter").install({
+    "lua",
     "vim",
     "vimdoc",
     "javascript",
@@ -32,7 +33,7 @@ require("nvim-treesitter").install { "lua",
     "toml",
     "xml",
     "yaml"
-}
+})
 
 require("nvim-ts-autotag").setup()
 

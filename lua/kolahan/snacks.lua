@@ -1,3 +1,16 @@
+local cfg = require('kolahan.utils.config');
+local map = cfg.map
+
+local function resume_picker(command, opts)
+    local resume = require("snacks.picker.resume")
+
+    if resume.state[command] then
+        Snacks.picker.resume(command)
+    else
+        Snacks.picker[command](opts or {})
+    end
+end
+
 vim.pack.add({
     { src = 'https://github.com/folke/snacks.nvim' }
 })
@@ -33,58 +46,70 @@ require('snacks').setup({
                 nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
             }
         }
-    }
+    },
+    sources = {
+        explorer = {
+            actions = {
+                explorer_add = function(picker)
+                    local ExplorerActions = require("snacks.explorer.actions")
+                    local Tree = require("snacks.explorer.tree")
+                    local uv = vim.uv or vim.loop
+
+                    Snacks.input({
+                        prompt = 'Add a new file or directory (directories end with a "/")',
+                    }, function(value)
+                        if not value or value:find("^%s*$") then
+                            return
+                        end
+
+                        local dir = picker:dir()
+                        local paths = vim.tbl_map(function(path)
+                            return {
+                                path = svim.fs.normalize(path),
+                                is_file = path:sub(-1) ~= "/",
+                            }
+                        end, vim.split(vim.fn.expand(dir .. "/" .. value), "\n", { trimempty = true }))
+
+                        for _, item in ipairs(paths) do
+                            if item.is_file and uv.fs_stat(item.path) then
+                                Snacks.notify.warn("File already exists:\n- `" .. item.path .. "`")
+                                return
+                            end
+                        end
+
+                        for _, item in ipairs(paths) do
+                            local target_dir = item.is_file and vim.fs.dirname(item.path) or item.path
+                            vim.fn.mkdir(target_dir, "p")
+                            if item.is_file then
+                                io.open(item.path, "w"):close()
+                            end
+                        end
+
+                        Tree:refresh(dir)
+                        ExplorerActions.update(picker, { target = paths[1].path, refresh = true })
+                    end)
+                end,
+            },
+        },
+    },
+
 })
 
-vim.keymap.set("n", "<leader>.", function()
-    Snacks.scratch()
-end, { desc = "Toggle Scratch Buffer" })
-
-vim.keymap.set("n", "<leader>S", function()
-    Snacks.picker.scratch()
-end, { desc = "Select Scratch Buffer" })
-
-vim.keymap.set("n", "<leader><space>", function()
-    Snacks.picker.smart({
-        filter = { cwd = true }
-    })
-end, { desc = "Smart Find Files" })
-
-vim.keymap.set("n", "<leader>bb", function()
-    Snacks.picker.buffers()
-end, { desc = "Buffers" })
-
-vim.keymap.set("n", "<leader>/", function()
-    Snacks.picker.grep()
-end, { desc = "Grep" })
-
-vim.keymap.set("n", "<leader>e", function()
-    Snacks.explorer()
-end, { desc = "File Explorer" })
-
-vim.keymap.set("n", "<leader>ff", function()
-    Snacks.picker.files()
-end, { desc = "Find Files" })
-
-vim.keymap.set("n", "<leader>fg", function()
-    Snacks.picker.git_files()
-end, { desc = "Find Git Files" })
-
-vim.keymap.set("n", "<leader>n", function()
-    Snacks.notifier.show_history()
-end, { desc = "Notification History" })
-
-vim.keymap.set("n", "<leader>bd", function()
-    Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
-
-vim.keymap.set("n", "<leader>bo", function()
-    Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers" })
-
-vim.keymap.set("n", '<leader>s"', function()
-    Snacks.picker.registers()
-end, { desc = "Registers" })
+map({ "<leader><space>", function() resume_picker("files") end, desc = "Find Files (Root Dir)", })
+map({ "<leader>/", function() resume_picker("grep") end, desc = "Grep (Root Dir)", })
+map({ "<leader>ff", function() resume_picker("files") end, desc = "Find Files (Root Dir)", })
+map({ "<leader>fF", function() resume_picker("files", { root = false }) end, desc = "Find Files (cwd)", })
+map({ "<leader>sg", function() resume_picker("grep") end, desc = "Grep (Root Dir)", })
+map({ "<leader>sG", function() resume_picker("grep", { root = false }) end, desc = "Grep (cwd)", })
+map({ "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" })
+map({ "<leader>S", function() Snacks.picker.scratch() end, desc = "Select Scratch Buffer" })
+map({ "<leader>bb", function() Snacks.picker.buffers() end, desc = "Buffers" })
+map({ "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" })
+map({ "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" })
+map({ "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" })
+map({ "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" })
+map({ "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete Other Buffers" })
+map({ '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" })
 
 local last_terminal_count = 1
 
@@ -110,9 +135,7 @@ for i = 1, 5 do
 end
 
 -- lsp mappings
-vim.keymap.set("n", "gd", function()
-    Snacks.picker.lsp_definitions()
-end, { desc = "Goto Definition" })
+map({ "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" })
 
 vim.keymap.set("n", "gr", function()
     Snacks.picker.lsp_references({
@@ -138,48 +161,21 @@ vim.keymap.set("n", "gr", function()
     })
 end, { desc = "References", nowait = true })
 
-vim.keymap.set("n", "gI", function()
-    Snacks.picker.lsp_implementations()
-end, { desc = "Goto Implementation" })
+map({ "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" })
+map({ "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" })
+map({ "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" })
+map({ "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymap" })
 
-vim.keymap.set("n", "gy", function()
-    Snacks.picker.lsp_type_definitions()
-end, { desc = "Goto Type Definition" })
+-- search
 
-vim.keymap.set("n", "<leader>uC", function()
-    Snacks.picker.colorschemes()
-end, { desc = "Colorschemes" })
-
-vim.keymap.set("n", "<leader>sk", function()
-    Snacks.picker.keymaps()
-end, { desc = "Keymap" })
-
--- search/search
-
-vim.keymap.set("n", "<leader>sh", function()
-    Snacks.picker.help()
-end, { desc = "Help" })
-
-vim.keymap.set("n", "<leader>fr", function()
-    Snacks.picker.recent()
-end, { desc = "Recent Files" })
-
-vim.keymap.set("n", "<leader>fp", function()
-    Snacks.picker.projects()
-end, { desc = "Projects" })
+map({ "<leader>sh", function() Snacks.picker.help() end, desc = "Help" })
+map({ "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" })
+map({ "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" })
 
 vim.keymap.set({ "n", "x" }, "<leader>sw", function()
     Snacks.picker.grep_word()
 end, { desc = "Search Word" })
 
-vim.keymap.set("n", "<leader>ss", function()
-    Snacks.picker.lsp_symbols()
-end, { desc = "Document Symbols" })
-
-vim.keymap.set("n", "<leader>sS", function()
-    Snacks.picker.lsp_workspace_symbols()
-end, { desc = "LSP Workspace Symbols" })
-
-vim.keymap.set("n", "<leader>fR", function()
-    Snacks.picker.resume()
-end, { desc = "Resume Picker" })
+map({ "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Document Symbols" })
+map({ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" })
+map({ "<leader>fR", function() Snacks.picker.resume() end, desc = "Resume Picker" })
