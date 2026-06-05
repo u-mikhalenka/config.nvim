@@ -1,3 +1,6 @@
+local cfg = require("kolahan.utils.config")
+local map = cfg.map
+
 vim.pack.add({
     { src = 'https://github.com/folke/which-key.nvim' },
 })
@@ -15,4 +18,11 @@ wk.add({
     { "<leader>u",     group = "UI" },
     { "<leader>w",     group = "Windows" },
     { "<leader><Tab>", group = "Tabs" },
+})
+map({
+    "<c-w><space>",
+    function()
+        require("which-key").show({ keys = "<c-w>", loop = true })
+    end,
+    desc = "Window Hydra Mode (which-key)",
 })
