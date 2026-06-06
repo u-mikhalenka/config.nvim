@@ -27,7 +27,7 @@ end
 require('snacks').setup({
     animate = { enabled = false },
     picker = { enabled = true },
-    explorer = { enabled = true },
+    explorer = { enabled = false },
     notifier = { enabled = true },
     indent = { enabled = false, animate = { enabled = false } },
     input = { enabled = true },
@@ -104,7 +104,7 @@ map({ "<leader>sG", function() resume_picker("grep", { root = false }) end, desc
 map({ "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" })
 map({ "<leader>S", function() Snacks.picker.scratch() end, desc = "Select Scratch Buffer" })
 map({ "<leader>bb", function() Snacks.picker.buffers() end, desc = "Buffers" })
-map({ "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" })
+-- map({ "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" })
 map({ "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" })
 map({ "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" })
 map({ "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" })

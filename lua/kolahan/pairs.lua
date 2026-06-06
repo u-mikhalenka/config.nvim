@@ -1,5 +1,5 @@
-vim.pack.add({
-    { src = "https://github.com/nvim-mini/mini.pairs" },
-})
-
-require("mini.pairs").setup({})
+-- vim.pack.add({
+--     { src = "https://github.com/nvim-mini/mini.pairs" },
+-- })
+--
+-- require("mini.pairs").setup({})
