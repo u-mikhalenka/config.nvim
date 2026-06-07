@@ -7,7 +7,7 @@ local function resume_picker(command, opts)
     if resume.state[command] then
         Snacks.picker.resume(command)
     else
-        Snacks.picker[command](opts or {})
+        Snacks.picker[command](vim.tbl_deep_extend("force", { matcher = { frecency = true } }, opts or {}))
     end
 end
 
@@ -97,6 +97,7 @@ require('snacks').setup({
 
 map({ "<leader><space>", function() resume_picker("files") end, desc = "Find Files (Root Dir)", })
 map({ "<leader>/", function() resume_picker("grep") end, desc = "Grep (Root Dir)", })
+map({ "<leader>E", function() Snacks.explorer() end, desc = "File Explorer" })
 map({ "<leader>ff", function() resume_picker("files") end, desc = "Find Files (Root Dir)", })
 map({ "<leader>fF", function() resume_picker("files", { root = false }) end, desc = "Find Files (cwd)", })
 map({ "<leader>sg", function() resume_picker("grep") end, desc = "Grep (Root Dir)", })
@@ -104,7 +105,6 @@ map({ "<leader>sG", function() resume_picker("grep", { root = false }) end, desc
 map({ "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" })
 map({ "<leader>S", function() Snacks.picker.scratch() end, desc = "Select Scratch Buffer" })
 map({ "<leader>bb", function() Snacks.picker.buffers() end, desc = "Buffers" })
--- map({ "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" })
 map({ "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" })
 map({ "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" })
 map({ "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" })
