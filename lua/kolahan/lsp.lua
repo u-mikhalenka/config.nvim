@@ -20,6 +20,21 @@ vim.lsp.enable("cssls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("angularls")
+vim.lsp.config("cspell_ls", {
+    filetypes = {
+        "typescript",
+        "javascript",
+        "typescriptreact",
+        "javascriptreact",
+        "html",
+        "css",
+        "scss",
+        "lua",
+        "markdown",
+    },
+})
+
+-- vim.lsp.enable("cspell_ls")
 
 -- Force-restart every active LSP client and reattach LSPs for listed file buffers.
 local function restart_all_lsp()
