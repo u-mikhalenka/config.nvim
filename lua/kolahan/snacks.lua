@@ -125,6 +125,12 @@ require('snacks').setup({
 
 })
 
+local snacks_image = require('snacks.image')
+local supports_file = snacks_image.supports_file
+snacks_image.supports_file = function(file)
+    return vim.fn.fnamemodify(file, ':e'):lower() == 'svg' or supports_file(file)
+end
+
 map({ "<leader><space>", function() Snacks.picker.files({ cwd = lsp_root(0) }) end, desc = "Find Files (Root Dir)", })
 map({ "<leader>/", function() Snacks.picker.grep({ cwd = lsp_root(0) }) end, desc = "Grep (Root Dir)", })
 map({ "<leader>E", function() Snacks.explorer() end, desc = "File Explorer" })
