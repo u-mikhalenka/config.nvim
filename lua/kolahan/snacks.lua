@@ -1,13 +1,43 @@
 local cfg = require('kolahan.utils.config');
 local map = cfg.map
 
+local function lsp_root(bufnr)
+    bufnr = bufnr or 0
+
+    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+    for _, client in ipairs(clients) do
+        if client.root_dir then
+            return client.root_dir
+        end
+
+        local folders = client.workspace_folders
+        if folders and folders[1] then
+            return vim.uri_to_fname(folders[1].uri)
+        end
+    end
+
+    local file = vim.api.nvim_buf_get_name(bufnr)
+    if file == "" then
+        return vim.uv.cwd()
+    end
+
+    return vim.fs.root(file, {
+        "package.json",
+        ".git",
+        "pyproject.toml",
+        "Cargo.toml",
+        "go.mod",
+    }) or vim.fs.dirname(file)
+end
+
 local function resume_picker(command, opts)
     local resume = require("snacks.picker.resume")
 
     if resume.state[command] then
         Snacks.picker.resume(command)
     else
-        Snacks.picker[command](vim.tbl_deep_extend("force", { matcher = { frecency = true } }, opts or {}))
+        Snacks.picker[command](vim.tbl_deep_extend("force", { cwd = lsp_root(), matcher = { frecency = true } },
+            opts or {}))
     end
 end
 
@@ -95,13 +125,13 @@ require('snacks').setup({
 
 })
 
-map({ "<leader><space>", function() resume_picker("files") end, desc = "Find Files (Root Dir)", })
-map({ "<leader>/", function() resume_picker("grep") end, desc = "Grep (Root Dir)", })
+map({ "<leader><space>", function() Snacks.picker.files({ cwd = lsp_root(0) }) end, desc = "Find Files (Root Dir)", })
+map({ "<leader>/", function() Snacks.picker.grep({ cwd = lsp_root(0) }) end, desc = "Grep (Root Dir)", })
 map({ "<leader>E", function() Snacks.explorer() end, desc = "File Explorer" })
-map({ "<leader>ff", function() resume_picker("files") end, desc = "Find Files (Root Dir)", })
-map({ "<leader>fF", function() resume_picker("files", { root = false }) end, desc = "Find Files (cwd)", })
-map({ "<leader>sg", function() resume_picker("grep") end, desc = "Grep (Root Dir)", })
-map({ "<leader>sG", function() resume_picker("grep", { root = false }) end, desc = "Grep (cwd)", })
+map({ "<leader>ff", function() Snacks.picker.files({ cwd = lsp_root(0) }) end, desc = "Find Files (Root Dir)", })
+map({ "<leader>fF", function() Snacks.picker.files() end, desc = "Find Files (cwd)", })
+map({ "<leader>sg", function() Snacks.picker.grep({ cwd = lsp_root(0) }) end, desc = "Grep (Root Dir)", })
+map({ "<leader>sG", function() Snacks.picker.grep() end, desc = "Grep (cwd)", })
 map({ "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" })
 map({ "<leader>S", function() Snacks.picker.scratch() end, desc = "Select Scratch Buffer" })
 map({ "<leader>bb", function() Snacks.picker.buffers() end, desc = "Buffers" })
