@@ -1,28 +1,31 @@
 local cfg = require("kolahan.utils.config")
 local map = cfg.map
 
-vim.pack.add({
-    { src = 'https://github.com/folke/which-key.nvim' },
-})
-
-local wk = require("which-key")
-wk.setup({ preset = "modern" })
-wk.add({
-    { "<leader>t",     group = "Toggles" },
-    { "<leader>c",     group = "Code" },
-    { "<leader>f",     group = "File/find" },
-    { "<leader>s",     group = "Search" },
-    { "<leader>g",     group = "Git" },
-    { "<leader>p",     group = "Project" },
-    { "<leader>b",     group = "Buffers" },
-    { "<leader>u",     group = "UI" },
-    { "<leader>w",     group = "Windows" },
-    { "<leader><Tab>", group = "Tabs" },
-})
-map({
-    "<c-w><space>",
-    function()
-        require("which-key").show({ keys = "<c-w>", loop = true })
-    end,
-    desc = "Window Hydra Mode (which-key)",
+cfg.pack_add({
+    src = 'https://github.com/folke/which-key.nvim',
+    enabled = false,
+    setup = function()
+        local wk = require("which-key")
+        wk.setup({ preset = "helix" })
+        wk.add({
+            { "<leader>t",     group = "Toggles" },
+            { "<leader>c",     group = "Code" },
+            { "<leader>f",     group = "File/find" },
+            { "<leader>s",     group = "Search" },
+            { "<leader>g",     group = "Git" },
+            { "<leader>b",     group = "Buffers" },
+            { "<leader>u",     group = "UI" },
+            { "<leader>w",     group = "Windows" },
+            { "<leader>y",     group = "Yank" },
+            { "<leader>a",     group = "FFF" },
+            { "<leader><Tab>", group = "Tabs" },
+        })
+        map({
+            "<c-w><space>",
+            function()
+                require("which-key").show({ keys = "<c-w>", loop = true })
+            end,
+            desc = "Window Hydra Mode (which-key)",
+        })
+    end
 })

@@ -1,6 +1,75 @@
 local cfg = require('kolahan.utils.config');
 local map = cfg.map
 
+local function setup_clue()
+    local miniclue = require('mini.clue')
+    miniclue.setup({
+        window = {
+            delay = 200,
+            config = {
+                width = 'auto',
+            },
+        },
+        triggers = {
+            -- Leader triggers
+            { mode = { 'n', 'x' }, keys = '<Leader>' },
+
+            -- `[` and `]` keys
+            { mode = 'n',          keys = '[' },
+            { mode = 'n',          keys = ']' },
+
+            -- Built-in completion
+            { mode = 'i',          keys = '<C-x>' },
+
+            -- `g` key
+            { mode = { 'n', 'x' }, keys = 'g' },
+
+            -- Marks
+            { mode = { 'n', 'x' }, keys = "'" },
+            { mode = { 'n', 'x' }, keys = '`' },
+
+            -- Registers
+            { mode = { 'n', 'x' }, keys = '"' },
+            { mode = { 'i', 'c' }, keys = '<C-r>' },
+
+            -- Window commands
+            { mode = 'n',          keys = '<C-w>' },
+
+            -- `z` key
+            { mode = { 'n', 'x' }, keys = 'z' },
+        },
+
+        clues = {
+            -- Enhance this by adding descriptions for <Leader> mapping groups
+            miniclue.gen_clues.square_brackets(),
+            miniclue.gen_clues.builtin_completion(),
+            miniclue.gen_clues.g(),
+            miniclue.gen_clues.marks(),
+            miniclue.gen_clues.registers(),
+            miniclue.gen_clues.windows({
+                submode_move = true,
+                submode_navigate = true,
+                submode_resize = true,
+            }),
+            miniclue.gen_clues.z(),
+
+            { mode = "n", keys = "<leader>t",     desc = "Toggles" },
+            { mode = "n", keys = "<leader>c",     desc = "Code" },
+            { mode = "n", keys = "<leader>f",     desc = "File/find" },
+            { mode = "n", keys = "<leader>s",     desc = "Search" },
+            { mode = "n", keys = "<leader>d",     desc = "Git" },
+            { mode = "n", keys = "<leader>p",     desc = "Project" },
+            { mode = "n", keys = "<leader>b",     desc = "Buffers" },
+            { mode = "n", keys = "<leader>u",     desc = "UI" },
+            { mode = "n", keys = "<leader>w",     desc = "Windows" },
+            { mode = "n", keys = "<leader><Tab>", desc = "Tabs" },
+            { mode = "n", keys = "<leader>y",     desc = "Yank" },
+            { mode = "n", keys = "<leader>a",     desc = "FFF" },
+            { mode = "n", keys = "<leader>q",     desc = "Sessions" },
+        },
+    })
+end
+
 cfg.pack_add({
     src = "https://github.com/nvim-mini/mini.nvim",
     setup = function()
@@ -15,17 +84,17 @@ cfg.pack_add({
         require("mini.pick").setup({})
         require("mini.surround").setup({
             mappings = {
-                add = "gsa",  -- Add surrounding in Normal and Visual modes
-                delete = "gsd", -- Delete surrounding
-                find = "gsf", -- Find surrounding (to the right)
-                find_left = "gsF", -- Find surrounding (to the left)
-                highlight = "gsh", -- Highlight surrounding
-                replace = "gsr", -- Replace surrounding
+                add = "gsa",            -- Add surrounding in Normal and Visual modes
+                delete = "gsd",         -- Delete surrounding
+                find = "gsf",           -- Find surrounding (to the right)
+                find_left = "gsF",      -- Find surrounding (to the left)
+                highlight = "gsh",      -- Highlight surrounding
+                replace = "gsr",        -- Replace surrounding
                 update_n_lines = "gsn", -- Update `n_lines`
             },
 
         })
-
+        setup_clue()
         map({
             "<leader>e",
             function()

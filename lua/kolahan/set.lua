@@ -38,6 +38,7 @@ vim.opt.termguicolors = true
 vim.opt.colorcolumn = "100"
 
 vim.g.mapleader = ' '
+vim.opt.timeoutlen = 300
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.diffopt = "internal,filler,closeoff,indent-heuristic,inline:char,linematch:60,algorithm:myers,iwhite"

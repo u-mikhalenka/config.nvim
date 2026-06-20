@@ -1,12 +1,23 @@
 local cfg = require("kolahan.utils.config")
 local map = cfg.map
 
-map({ "<leader>ur", "<cmd>nohlsearch<bar>diffupdate<bar>normal! <C-L><cr>", desc = "Redraw / Clear hlsearch / Diff Update" })
+map({
+    "<leader>ur",
+    "<cmd>nohlsearch<bar>diffupdate<bar>normal! <C-L><cr>",
+    desc =
+    "Redraw / Clear hlsearch / Diff Update"
+})
 
-map({ "<Esc>", function()
-    vim.cmd("nohlsearch")
-    return "<Esc>"
-end, mode = { "i", "n", "s" }, expr = true, desc = "Escape and Clear hlsearch" })
+map({
+    "<Esc>",
+    function()
+        vim.cmd("nohlsearch")
+        return "<Esc>"
+    end,
+    mode = { "i", "n", "s" },
+    expr = true,
+    desc = "Escape and Clear hlsearch"
+})
 
 map({ "<leader>uu", "<cmd>Undotree<cr>", desc = "Undo tree" })
 
@@ -21,35 +32,56 @@ map({ "N", "Nzzzv" })
 map({ "<leader>p", '"_dP', mode = "x", desc = "Paste without overwriting clipboard" })
 
 local yank = require("kolahan.utils.yank")
-map({ "<leader>ya", function()
-    yank.yank_path(yank.get_buffer_absolute(), "absolute")
-end, desc = "[Y]ank [A]bsolute path to clipboard" })
+map({
+    "<leader>ya",
+    function()
+        yank.yank_path(yank.get_buffer_absolute(), "absolute")
+    end,
+    desc = "[Y]ank [A]bsolute path to clipboard"
+})
 
-map({ "<leader>yr", function()
-    yank.yank_path(yank.get_buffer_cwd_relative(), "relative")
-end, desc = "[Y]ank [R]elative path to clipboard" })
+map({
+    "<leader>yr",
+    function()
+        yank.yank_path(yank.get_buffer_cwd_relative(), "relative")
+    end,
+    desc = "[Y]ank [R]elative path to clipboard"
+})
 
-map({ "<leader>ya", function()
-    yank.yank_visual_with_path(yank.get_buffer_absolute(), "absolute")
-end, mode = "v", desc = "[Y]ank selection with [A]bsolute path" })
+map({
+    "<leader>ya",
+    function()
+        yank.yank_visual_with_path(yank.get_buffer_absolute(), "absolute")
+    end,
+    mode = "v",
+    desc = "[Y]ank selection with [A]bsolute path"
+})
 
-map({ "<leader>yr", function()
-    yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), "relative")
-end, mode = "v", desc = "[Y]ank selection with [R]elative path" })
+map({
+    "<leader>yr",
+    function()
+        yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), "relative")
+    end,
+    mode = "v",
+    desc = "[Y]ank selection with [R]elative path"
+})
 
 map({ "<leader>yy", '"+y', desc = "[Y]ank to s[y]stem clipboard" })
 map({ "<leader>yy", '"+y', mode = "v", desc = "[Y]ank to s[y]stem clipboard" })
-map({ "<leader>YY", '"+Y', desc = "[Y]ank to s[y]stem clipboard" })
 
 map({ "<leader>d", '"_d', desc = "Delete without yanking" })
 map({ "<leader>d", '"_d', mode = "v", desc = "Delete without yanking" })
 
-map({ "<leader>cf", function()
-    require("conform").format({
-        async = true,
-        lsp_format = "fallback",
-    })
-end, desc = "Format" })
+map({
+    "<leader>cf",
+    function()
+        require("conform").format({
+            async = true,
+            lsp_format = "fallback",
+        })
+    end,
+    desc = "Format"
+})
 
 map({ "<leader>ca", vim.lsp.buf.code_action, mode = { "n", "v" }, desc = "Code Action" })
 
@@ -59,16 +91,21 @@ map({ "<leader>cr", vim.lsp.buf.rename, desc = "Rename" })
 map({ "<leader>bp", "<cmd>bprevious<cr>", desc = "Previous buffer" })
 map({ "<leader>bn", "<cmd>bnext<cr>", desc = "Next buffer" })
 
-map({ "<C-Space>", function()
-    local ok, blink = pcall(require, "blink.cmp")
+map({
+    "<C-Space>",
+    function()
+        local ok, blink = pcall(require, "blink.cmp")
 
-    if ok then
-        blink.show()
-    else
-        -- fallback to native LSP completion
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true), "n", true)
-    end
-end, mode = "i", desc = "Trigger completion" })
+        if ok then
+            blink.show()
+        else
+            -- fallback to native LSP completion
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true), "n", true)
+        end
+    end,
+    mode = "i",
+    desc = "Trigger completion"
+})
 
 map({ "<leader>ch", vim.lsp.buf.signature_help, desc = "Signature Help" })
 
