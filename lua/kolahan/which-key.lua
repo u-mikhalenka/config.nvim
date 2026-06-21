@@ -3,7 +3,7 @@ local map = cfg.map
 
 cfg.pack_add({
     src = 'https://github.com/folke/which-key.nvim',
-    enabled = false,
+    enabled = true,
     setup = function()
         local wk = require("which-key")
         wk.setup({ preset = "helix" })
@@ -19,6 +19,7 @@ cfg.pack_add({
             { "<leader>y",     group = "Yank" },
             { "<leader>a",     group = "FFF" },
             { "<leader><Tab>", group = "Tabs" },
+            { "<leader>h",     group = "Harpoon" },
         })
         map({
             "<c-w><space>",

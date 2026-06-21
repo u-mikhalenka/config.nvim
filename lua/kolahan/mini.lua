@@ -2,6 +2,8 @@ local cfg = require('kolahan.utils.config');
 local map = cfg.map
 
 local function setup_clue()
+    if true then return end
+
     local miniclue = require('mini.clue')
     miniclue.setup({
         window = {

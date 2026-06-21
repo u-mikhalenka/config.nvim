@@ -81,9 +81,12 @@ cfg.pack_add({
     setup = function()
         require('gitsigns').setup({
             on_attach = function(bufnr)
-                require("which-key").add({
-                    { "<leader>gh", group = "Hunks", buffer = bufnr },
-                })
+                local ok, wk = pcall(require, "which-key")
+                if ok then
+                    wk.add({
+                        { "<leader>gh", group = "Hunks", buffer = bufnr },
+                    })
+                end
 
                 local gitsigns = require('gitsigns')
 

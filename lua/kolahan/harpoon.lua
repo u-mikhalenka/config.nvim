@@ -9,7 +9,6 @@ local harpoon = require("harpoon")
 harpoon:setup()
 -- REQUIRED
 
-require("which-key").add({ { "<leader>h", group = "Harpoon" } });
 
 vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Harpoon add" })
 vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon list" })
