@@ -16,6 +16,13 @@ require("lazydev").setup({
     },
 })
 
+vim.lsp.config("angularls", {
+    on_attach = function(client)
+        -- HACK: Angular LS can trigger a duplicate rename popup.
+        client.server_capabilities.renameProvider = false
+    end,
+})
+
 vim.lsp.enable("cssls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("ts_ls")
