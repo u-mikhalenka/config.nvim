@@ -1,1 +1,1 @@
-require('kolahan')
+require('personal.init')

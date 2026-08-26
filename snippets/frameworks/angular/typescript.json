@@ -39,13 +39,14 @@
       "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';",
       "",
       "@Component({",
-      "\tselector: '$1-${TM_FILENAME_BASE/(.*)(\\.component)?/${1}/}',",
+      "\tselector: '${TM_FILENAME_BASE/(.*)(\\.component)?/${1}/}',",
       "\ttemplateUrl: './${TM_FILENAME_BASE}.html',",
+      "\tstyleUrl: './${TM_FILENAME_BASE}.scss',",
       "\tchangeDetection: ChangeDetectionStrategy.OnPush,",
       "\tencapsulation: ViewEncapsulation.None,",
       "\timports: [],",
       "\thost: {",
-      "\t\tclass: '$1-${TM_FILENAME_BASE/(.*)(\\.component)?/${1}/}'",
+      "\t\tclass: '${TM_FILENAME_BASE/(.*)(\\.component)?/${1}/}'",
       "\t},",
       "})",
       "export class ${TM_FILENAME_BASE/(.*)(\\.component)?/${1:/pascalcase}/} {$2}"
@@ -71,5 +72,10 @@
     "scope": "typescript",
     "prefix": ["rgn"],
     "body": ["// #region ${1}", "// #endregion"]
+  },
+  "Angular directive": {
+    "scope": "typescript",
+    "prefix": ["dir"],
+    "body": ["@Directive({", "\tselector: '${1}',", "})"]
   }
 }
