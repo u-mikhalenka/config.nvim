@@ -6,6 +6,8 @@ require("shared.angular").setup()
 require("shared.markdown").setup()
 require("shared.quickfix").setup()
 
+vim.opt.splitright = true -- split :vnew to the right
+
 -- use system clipboard
 vim.opt.clipboard = "unnamedplus"
 

@@ -4,7 +4,7 @@ cfg.pack_add({
     enabled = true,
     src = "https://github.com/sindrets/diffview.nvim",
     setup = function()
-        local diffview_actions = require("diffview.actions")
+        local actions = require("diffview.actions")
         local diffview_fold_descriptions = {
             za = "Toggle fold",
             zA = "Toggle folds recursively",
@@ -33,7 +33,7 @@ cfg.pack_add({
                 mapping[3],
                 { desc = diffview_fold_descriptions[mapping[2]] },
             }
-        end, diffview_actions.compat.fold_cmds)
+        end, actions.compat.fold_cmds)
 
         require("diffview").setup({
             hooks = {
@@ -43,6 +43,10 @@ cfg.pack_add({
             },
             keymaps = {
                 view = diffview_fold_keymaps,
+
+                file_panel = {
+                    { "n", "<cr>", actions.focus_entry, { desc = "Open diff and focus right side" } },
+                },
             },
         })
     end,
