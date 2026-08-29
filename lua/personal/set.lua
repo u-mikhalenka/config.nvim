@@ -1,4 +1,7 @@
 require("vim._core.ui2").enable()
+
+vim.g.mapleader = " "
+
 require("shared.term_title").setup()
 require("shared.autoread").setup()
 require("shared.lsp_restart").setup()
@@ -49,7 +52,6 @@ vim.opt.termguicolors = true
 
 vim.opt.colorcolumn = "100"
 
-vim.g.mapleader = " "
 vim.opt.timeoutlen = 300
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
