@@ -104,7 +104,7 @@ H.render_buf = function(buf, menu)
     for i, item in ipairs(menu) do
         if item.menu ~= nil then
             vim.api.nvim_buf_set_extmark(buf, ns, i - 1, 0, {
-                virt_text = { { " 󰁔", "Special" } },
+                virt_text = { { "", "Special" } },
                 virt_text_pos = "right_align",
             })
         end

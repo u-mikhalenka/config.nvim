@@ -1,29 +1,37 @@
 local M = {}
 
-local function git_branch_lines()
-    local result = vim.system({ "git", "branch", "--all", "--format=%(refname:short)" }, { text = true }):wait()
+local G = {}
+
+local REF_TYPE_BRANCH = "branch"
+local REF_TYPE_TAG = "tag"
+
+G.get_git_lines = function(cmd)
+    local result = vim.system(cmd, { text = true }):wait()
 
     if result.code ~= 0 then
-        vim.notify(result.stderr ~= "" and result.stderr or "Failed to list git branches", vim.log.levels.ERROR)
+        vim.notify(result.stderr ~= "" and result.stderr or "Failed to execute git command", vim.log.levels.ERROR)
         return {}
     end
 
-    local branches = {}
+    local lines = {}
 
     for line in result.stdout:gmatch("[^\n]+") do
         local branch = line
-        table.insert(branches, branch)
+        table.insert(lines, branch)
     end
 
-    table.sort(branches)
-    return branches
+    table.sort(lines)
+    return lines
 end
 
-local function run_git(args, on_success)
-    local result = vim.system(vim.list_extend({ "git" }, args), { text = true }):wait()
+G.notify_exec_failed = function(result)
+    vim.notify(result.stderr ~= "" and result.stderr or "Git command failed", vim.log.levels.ERROR)
+end
 
+G.run_git = function(args, on_success)
+    local result = vim.system(vim.list_extend({ "git" }, args), { text = true }):wait()
     if result.code ~= 0 then
-        vim.notify(result.stderr ~= "" and result.stderr or "Git command failed", vim.log.levels.ERROR)
+        G.notify_exec_failed(result)
         return
     end
 
@@ -32,43 +40,65 @@ local function run_git(args, on_success)
     end
 end
 
-local get_branch_actions_menu = function(branch)
+G.get_branches = function()
+    return G.get_git_lines({ "git", "branch", "--all", "--format=%(refname:short)" })
+end
+
+G.rename_branch = function(ref)
+    require("personal.actions.ui").input("New branch name: ", ref, function(new_name)
+        G.run_git({ "branch", "-m", ref, new_name }, function()
+            vim.notify("Renamed " .. ref .. " to " .. new_name)
+        end)
+    end)
+end
+
+G.get_tags = function()
+    return G.get_git_lines({ "git", "tag", "--list" })
+end
+
+G.checkout = function(ref)
+    vim.notify("Checking out " .. ref .. "...")
+    vim.system({ "git", "checkout", ref }, { text = true }, vim.schedule_wrap(function(result)
+        if result.code ~= 0 then
+            G.notify_exec_failed(result)
+            return
+        end
+        vim.notify("Checked out " .. ref)
+    end))
+end
+
+local get_ref_actions_menu = function(ref, ref_type)
     return {
         {
             name = "Diff with working tree",
             action = function()
-                vim.cmd("DiffviewOpen " .. vim.fn.fnameescape(branch))
+                vim.cmd("DiffviewOpen " .. vim.fn.fnameescape(ref))
             end
         },
         {
             name = "Diff current branch against branch",
             action = function()
-                vim.cmd("DiffviewOpen " .. vim.fn.fnameescape(branch) .. "..HEAD")
+                vim.cmd("DiffviewOpen " .. vim.fn.fnameescape(ref) .. "..HEAD")
             end
         },
         {
             name = "Diff branch against current branch",
             action = function()
-                vim.cmd("DiffviewOpen HEAD.." .. vim.fn.fnameescape(branch))
+                vim.cmd("DiffviewOpen HEAD.." .. vim.fn.fnameescape(ref))
             end
         },
 
         {
             name = "Rename...",
             action = function()
-                require("personal.actions.ui").input("New branch name: ", branch, function(new_name)
-                    run_git({ "branch", "-m", branch, new_name }, function()
-                        vim.notify("Renamed " .. branch .. " to " .. new_name)
-                    end)
-                end)
-            end
+                G.rename_branch(ref)
+            end,
+            when = ref_type == REF_TYPE_BRANCH
         },
         {
             name = "Checkout",
             action = function()
-                run_git({ "checkout", branch }, function()
-                    vim.notify("Checked out " .. branch)
-                end)
+                G.checkout(ref)
             end
         },
         --     elseif choice == "Delete local branch" then
@@ -87,23 +117,31 @@ local get_branch_actions_menu = function(branch)
     }
 end
 
-local function branches_menu()
-    local branches = git_branch_lines()
-    if #branches == 0 then
-        vim.notify("No git branches found", vim.log.levels.WARN)
+local function refs_menu(ref_type, get_list)
+    local list = get_list()
+    if #list == 0 then
+        vim.notify("No git " .. ref_type .. " found", vim.log.levels.WARN)
         return {}
     end
 
     local menu = {}
-    for _, branch in ipairs(branches) do
+    for _, ref in ipairs(list) do
         local item = {
-            name = branch,
-            menu = function() return get_branch_actions_menu(branch) end
+            name = ref,
+            menu = function() return get_ref_actions_menu(ref, ref_type) end
         }
         table.insert(menu, item)
     end
 
     return menu
+end
+
+local function branches_menu()
+    return refs_menu(REF_TYPE_BRANCH, G.get_branches)
+end
+
+local function tags_menu()
+    return refs_menu(REF_TYPE_TAG, G.get_tags)
 end
 
 M.git_menu = function()
@@ -112,6 +150,11 @@ M.git_menu = function()
             name = "Branches",
             children = {},
             menu = branches_menu
+        },
+        {
+            name = "Tags",
+            children = {},
+            menu = tags_menu
         },
     }
 end

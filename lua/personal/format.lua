@@ -22,6 +22,7 @@ cfg.pack_add({
                 typescriptreact = { "prettier" },
                 json = { "prettier" },
                 markdown = { "prettier" },
+                lua = { "stylua" },
             },
 
             format_on_save = function(bufnr)
