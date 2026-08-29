@@ -74,33 +74,33 @@ end
 local get_ref_actions_menu = function(ref, ref_type)
   return {
     {
-      name = "Diff with working tree",
+      desc = "Diff with working tree",
       action = function()
         vim.cmd("DiffviewOpen " .. vim.fn.fnameescape(ref))
       end,
     },
     {
-      name = "Diff current branch against branch",
+      desc = "Diff current branch against branch",
       action = function()
         vim.cmd("DiffviewOpen " .. vim.fn.fnameescape(ref) .. "..HEAD")
       end,
     },
     {
-      name = "Diff branch against current branch",
+      desc = "Diff branch against current branch",
       action = function()
         vim.cmd("DiffviewOpen HEAD.." .. vim.fn.fnameescape(ref))
       end,
     },
 
     {
-      name = "Rename...",
+      desc = "Rename...",
       action = function()
         G.rename_branch(ref)
       end,
       when = ref_type == REF_TYPE_BRANCH,
     },
     {
-      name = "Checkout",
+      desc = "Checkout",
       action = function()
         G.checkout(ref)
       end,
@@ -131,7 +131,7 @@ local function refs_menu(ref_type, get_list)
   local menu = {}
   for _, ref in ipairs(list) do
     local item = {
-      name = ref,
+      desc = ref,
       menu = function()
         return get_ref_actions_menu(ref, ref_type)
       end,
@@ -153,12 +153,12 @@ end
 M.git_menu = function()
   return {
     {
-      name = "Branches",
+      desc = "Branches",
       children = {},
       menu = branches_menu,
     },
     {
-      name = "Tags",
+      desc = "Tags",
       children = {},
       menu = tags_menu,
     },

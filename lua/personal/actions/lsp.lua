@@ -88,7 +88,7 @@ end
 local function debug_menu()
   return {
     {
-      name = "Attached Clients",
+      desc = "Attached Clients",
       action = function()
         inspect_value(
           "LSP attached clients",
@@ -103,7 +103,7 @@ local function debug_menu()
       end,
     },
     {
-      name = "Execute Commands",
+      desc = "Execute Commands",
       action = function()
         local commands = {}
         for _, client in ipairs(current_clients()) do
@@ -115,7 +115,7 @@ local function debug_menu()
       end,
     },
     {
-      name = "Client Commands",
+      desc = "Client Commands",
       action = function()
         local commands = {}
         for _, client in ipairs(current_clients()) do
@@ -126,7 +126,7 @@ local function debug_menu()
       end,
     },
     {
-      name = "Server Capabilities",
+      desc = "Server Capabilities",
       action = function()
         local capabilities = {}
         for _, client in ipairs(current_clients()) do
@@ -137,7 +137,7 @@ local function debug_menu()
       end,
     },
     {
-      name = "All Active Clients",
+      desc = "All Active Clients",
       action = function()
         inspect_value(
           "LSP active clients",
@@ -153,7 +153,7 @@ local function debug_menu()
       end,
     },
     {
-      name = "LSP Info",
+      desc = "LSP Info",
       action = function()
         inspect_value("LSP info", {
           source_buffer = source_buf(),
@@ -171,7 +171,7 @@ local function debug_menu()
       end,
     },
     {
-      name = "Open LSP Log",
+      desc = "Open LSP Log",
       action = function()
         vim.cmd.edit(vim.fn.fnameescape(vim.lsp.log.get_filename()))
       end,
@@ -184,32 +184,32 @@ M.lsp_menu = function()
 
   if has_client("vtsls") or has_client("angularls") then
     table.insert(menu, {
-      name = "Restart TS Server",
+      desc = "Restart TS Server",
       action = function()
         exec_command("vtsls", "typescript.restartTsServer")
       end,
     })
     table.insert(menu, {
-      name = "Hard Restart TS Server",
+      desc = "Hard Restart TS Server",
       action = function()
         restart_clients({ "vtsls" })
       end,
     })
     table.insert(menu, {
-      name = "Hard Restart Angular Server",
+      desc = "Hard Restart Angular Server",
       action = function()
         restart_clients({ "angularls" })
       end,
     })
     table.insert(menu, {
-      name = "Hard Restart TS + Angular Servers",
+      desc = "Hard Restart TS + Angular Servers",
       action = function()
         restart_clients({ "vtsls", "angularls" })
       end,
     })
 
     table.insert(menu, {
-      name = "Hard Restart All LSP Servers",
+      desc = "Hard Restart All LSP Servers",
       action = function()
         vim.cmd("LspRestartAll")
       end,
@@ -217,7 +217,7 @@ M.lsp_menu = function()
   end
 
   table.insert(menu, {
-    name = "Debug",
+    desc = "Debug",
     menu = debug_menu,
   })
 

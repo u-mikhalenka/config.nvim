@@ -38,7 +38,7 @@ end
 H.get_menu_width = function(menu)
   local len = string.len(H.filter_title())
   for _, item in ipairs(menu) do
-    len = math.max(len, string.len(item.name))
+    len = math.max(len, string.len(item.desc))
   end
   return math.max(len + 2, 32)
 end
@@ -59,7 +59,7 @@ H.get_win_config = function(menu)
     focusable = true,
     relative = "editor",
     col = math.floor((vim.o.columns - width) / 2),
-    row = math.floor((vim.o.lines - height) / 2),
+    row = 10, -- math.floor((vim.o.lines - height) / 2),
     width = width,
     height = height,
     style = "minimal",
@@ -78,7 +78,7 @@ H.filtered_menu = function(menu, filter)
   local filtered = {}
   local lower_filter = string.lower(filter)
   for _, item in ipairs(menu) do
-    if string.find(string.lower(item.name), lower_filter, 1, true) then
+    if string.find(string.lower(item.desc), lower_filter, 1, true) then
       table.insert(filtered, item)
     end
   end
@@ -94,7 +94,7 @@ H.render_buf = function(buf, menu)
     lines = { "(no matches)" }
   else
     for _, item in ipairs(menu) do
-      table.insert(lines, " " .. item.name)
+      table.insert(lines, " " .. item.desc)
     end
   end
 

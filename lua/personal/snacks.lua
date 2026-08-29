@@ -41,18 +41,6 @@ local function lsp_root(bufnr)
   return clamp_to_cwd(root)
 end
 
-local function resume_picker(command, opts)
-  local resume = require("snacks.picker.resume")
-
-  if resume.state[command] then
-    Snacks.picker.resume(command)
-  else
-    Snacks.picker[command](
-      vim.tbl_deep_extend("force", { cwd = lsp_root(), matcher = { frecency = true } }, opts or {})
-    )
-  end
-end
-
 local function term_nav(dir)
   ---@param self snacks.terminal
   return function(self)
@@ -453,32 +441,11 @@ cfg.pack_add({
       desc = "Search History",
     },
     {
-      "<leader>sa",
-      function()
-        Snacks.picker.autocmds()
-      end,
-      desc = "Autocmds",
-    },
-    {
       "<leader>sb",
       function()
         Snacks.picker.lines()
       end,
       desc = "Buffer Lines",
-    },
-    {
-      "<leader>sc",
-      function()
-        Snacks.picker.command_history()
-      end,
-      desc = "Command History",
-    },
-    {
-      "<leader>sC",
-      function()
-        Snacks.picker.commands()
-      end,
-      desc = "Commands",
     },
     {
       "<leader>sd",
@@ -500,20 +467,6 @@ cfg.pack_add({
         Snacks.picker.help()
       end,
       desc = "Help Pages",
-    },
-    {
-      "<leader>sH",
-      function()
-        Snacks.picker.highlights()
-      end,
-      desc = "Highlights",
-    },
-    {
-      "<leader>si",
-      function()
-        Snacks.picker.icons()
-      end,
-      desc = "Icons",
     },
     {
       "<leader>sj",
@@ -544,13 +497,6 @@ cfg.pack_add({
       desc = "Marks",
     },
     {
-      "<leader>sM",
-      function()
-        Snacks.picker.man()
-      end,
-      desc = "Man Pages",
-    },
-    {
       "<leader>sq",
       function()
         Snacks.picker.qflist()
@@ -571,20 +517,12 @@ cfg.pack_add({
       end,
       desc = "Undo History",
     },
-
     {
       "<leader>bb",
       function()
         Snacks.picker.buffers()
       end,
       desc = "Buffers",
-    },
-    {
-      "<leader>n",
-      function()
-        Snacks.notifier.show_history()
-      end,
-      desc = "Notification History",
     },
     {
       "<leader>bd",
@@ -600,14 +538,6 @@ cfg.pack_add({
       end,
       desc = "Delete Other Buffers",
     },
-    {
-      "<leader>uC",
-      function()
-        Snacks.picker.colorschemes()
-      end,
-      desc = "Colorschemes",
-    },
-
     {
       "<c-/>",
       toggle_last_terminal,

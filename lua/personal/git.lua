@@ -138,9 +138,6 @@ cfg.pack_add({
           gitsigns.setqflist("all")
         end, { desc = "Send all hunks to quickfix" })
         map("n", "<leader>ghq", gitsigns.setqflist, { desc = "Send hunks to quickfix" })
-        -- Toggles
-        map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle git blame line" })
-        map("n", "<leader>tw", gitsigns.toggle_word_diff, { desc = "Toggle git word diff" })
         -- Text object
         map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select git hunk" })
       end,
@@ -152,7 +149,12 @@ cfg.pack_add({
 cfg.pack_add({
   src = "https://github.com/neogitorg/neogit",
   setup = function()
-    require("neogit").setup({})
+    require("neogit").setup({
+      integrations = {
+        diffview = true,
+        snacks = true,
+      },
+    })
   end,
   keys = {
     {
