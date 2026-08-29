@@ -1,1 +1,1 @@
-require('personal.init')
+require("personal.init")

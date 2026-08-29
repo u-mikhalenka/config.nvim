@@ -1,60 +1,60 @@
-local cfg = require('personal.utils.config')
+local cfg = require("personal.utils.config")
 
 cfg.pack_add({
-    src = "https://github.com/stevearc/conform.nvim",
-    setup = function()
-        vim.g.disable_autoformat = false
+  src = "https://github.com/stevearc/conform.nvim",
+  setup = function()
+    vim.g.disable_autoformat = false
 
-        require("conform").setup({
-            formatters = {
-                prettier = {
-                    prepend_args = { "--prose-wrap", "always" },
-                },
-            },
-
-            formatters_by_ft = {
-                html = { "prettier" },
-                htmlangular = { "prettier" },
-                css = { "prettier" },
-                scss = { "prettier" },
-                javascript = { "prettier" },
-                typescript = { "prettier" },
-                typescriptreact = { "prettier" },
-                json = { "prettier" },
-                markdown = { "prettier" },
-                lua = { "stylua" },
-            },
-
-            format_on_save = function(bufnr)
-                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-                    return
-                end
-
-                return {
-                    timeout_ms = 3000,
-                    lsp_format = "fallback",
-                }
-            end,
-        })
-    end,
-    keys = {
-        {
-            "n",
-            "<leader>tf",
-            function()
-                vim.g.disable_autoformat = not vim.g.disable_autoformat
-                vim.notify("Format on save " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
-            end,
-            desc = "Toggle Format on Save",
+    require("conform").setup({
+      formatters = {
+        prettier = {
+          prepend_args = { "--prose-wrap", "always" },
         },
-        {
-            "n",
-            "<leader>tF",
-            function()
-                vim.b.disable_autoformat = not vim.b.disable_autoformat
-                vim.notify("Format on save for buffer " .. (vim.b.disable_autoformat and "disabled" or "enabled"))
-            end,
-            desc = "Toggle Format on Save Buffer",
-        },
+      },
+
+      formatters_by_ft = {
+        html = { "prettier" },
+        htmlangular = { "prettier" },
+        css = { "prettier" },
+        scss = { "prettier" },
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        typescriptreact = { "prettier" },
+        json = { "prettier" },
+        markdown = { "prettier" },
+        lua = { "stylua" },
+      },
+
+      format_on_save = function(bufnr)
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+
+        return {
+          timeout_ms = 3000,
+          lsp_format = "fallback",
+        }
+      end,
+    })
+  end,
+  keys = {
+    {
+      "n",
+      "<leader>tf",
+      function()
+        vim.g.disable_autoformat = not vim.g.disable_autoformat
+        vim.notify("Format on save " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
+      end,
+      desc = "Toggle Format on Save",
     },
+    {
+      "n",
+      "<leader>tF",
+      function()
+        vim.b.disable_autoformat = not vim.b.disable_autoformat
+        vim.notify("Format on save for buffer " .. (vim.b.disable_autoformat and "disabled" or "enabled"))
+      end,
+      desc = "Toggle Format on Save Buffer",
+    },
+  },
 })

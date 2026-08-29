@@ -4,15 +4,15 @@ local hues = require("mini.hues")
 local colors = require("mini.colors")
 
 hues.setup({
-    background = "#f7f7f7",
-    foreground = "#303846",
-    n_hues = 8,
-    saturation = "high",
-    accent = "bg",
-    plugins = {
-        default = true,
-    },
-    autoadjust = true,
+  background = "#f7f7f7",
+  foreground = "#303846",
+  n_hues = 8,
+  saturation = "high",
+  accent = "bg",
+  plugins = {
+    default = true,
+  },
+  autoadjust = true,
 })
 
 local palette = hues.get_palette()
@@ -27,11 +27,11 @@ palette.purple = "#7a3e9d"
 hues.apply_palette(palette)
 
 local function hl(name, val)
-    vim.api.nvim_set_hl(0, name, val)
+  vim.api.nvim_set_hl(0, name, val)
 end
 
 local words_bg = colors.modify_channel(palette.bg, "lightness", function(l)
-    return l - 6
+  return l - 6
 end)
 --
 -- stylua: ignore start
@@ -68,7 +68,6 @@ hl("MiniTablineModifiedHidden", {
 
 hl("BlinkCmpMenu", { link = 'FloatBorder' })
 hl("BlinkCmpMenuBorder", { link = 'FloatBorder' })
-
 
 -- stylua: ignore end
 
