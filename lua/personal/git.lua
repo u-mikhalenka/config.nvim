@@ -1,5 +1,7 @@
 local cfg = require("personal.utils.config")
 
+cfg.pack_add({ src = "https://github.com/tpope/vim-fugitive" })
+
 cfg.pack_add({
   enabled = true,
   src = "https://github.com/sindrets/diffview.nvim",
@@ -147,6 +149,7 @@ cfg.pack_add({
 
 -- neogit
 cfg.pack_add({
+  enabled = false,
   src = "https://github.com/neogitorg/neogit",
   setup = function()
     require("neogit").setup({

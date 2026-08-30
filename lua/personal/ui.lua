@@ -26,6 +26,7 @@ cfg.pack_add({
         },
       },
     })
+
     vim.cmd("colorscheme github_light_default")
   end,
 })
