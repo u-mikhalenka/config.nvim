@@ -145,6 +145,9 @@ cfg.pack_add({
           preset = "vertical",
         },
         sources = {
+          files = {
+            hidden = true,
+          },
           smart = {
             filter = { cwd = true },
             on_show = function(picker)
@@ -169,6 +172,7 @@ cfg.pack_add({
             },
           },
           explorer = {
+            hidden = true,
             actions = {
               explorer_add = function(picker)
                 local ExplorerActions = require("snacks.explorer.actions")
