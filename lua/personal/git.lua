@@ -4,7 +4,7 @@ cfg.pack_add({ src = "https://github.com/tpope/vim-fugitive" })
 
 cfg.pack_add({
   enabled = true,
-  src = "https://github.com/sindrets/diffview.nvim",
+  src = "https://github.com/dlyongemallo/diffview-plus.nvim",
   setup = function()
     local actions = require("diffview.actions")
     local diffview_fold_descriptions = {
