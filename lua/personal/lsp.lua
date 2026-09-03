@@ -38,6 +38,7 @@ cfg.pack_add({
         },
       },
       completion = {
+        accept = { auto_brackets = { enabled = false } },
         ghost_text = { enabled = false },
         trigger = {
           show_on_keyword = true,

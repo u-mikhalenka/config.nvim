@@ -39,6 +39,16 @@ local function open_empty_diff_split()
   vim.cmd("diffthis")
 end
 
+local function open_current_file_in_finder()
+  local path = vim.api.nvim_buf_get_name(0)
+  if path == "" or vim.bo.buftype ~= "" or vim.fn.filereadable(path) == 0 then
+    vim.system({ "open", vim.fn.getcwd() }, { detach = true })
+    return
+  end
+
+  vim.system({ "open", "-R", path }, { detach = true })
+end
+
 M.setup = function()
   local cfg = require("personal.utils.config")
   local git = require("personal.actions.git")
@@ -59,6 +69,10 @@ M.setup = function()
       {
         desc = "Open Empty Diff Split",
         action = open_empty_diff_split,
+      },
+      {
+        desc = "Open Current File in Finder",
+        action = open_current_file_in_finder,
       },
     }
     vim.list_extend(menu, snacks.snacks_menu() or {})
