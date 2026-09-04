@@ -154,10 +154,10 @@ map({ "<leader>ch", vim.lsp.buf.signature_help, desc = "Signature Help" })
 
 -- Windows
 map({ "<leader>wc", "<C-w>c", desc = "Close window" })
-map({ "<C-h>", "<C-w>h", desc = "Go left window" })
-map({ "<C-j>", "<C-w>j", desc = "Go down window" })
-map({ "<C-k>", "<C-w>k", desc = "Go up window" })
-map({ "<C-l>", "<C-w>l", desc = "Go right window" })
+map({ "<C-A-h>", "<C-w>h", desc = "Go left window" })
+map({ "<C-A-j>", "<C-w>j", desc = "Go down window" })
+map({ "<C-A-k>", "<C-w>k", desc = "Go up window" })
+map({ "<C-A-l>", "<C-w>l", desc = "Go right window" })
 
 -- Tabs
 map({ "<leader><tab>l", "<cmd>tablast<cr>", desc = "Last Tab" })
