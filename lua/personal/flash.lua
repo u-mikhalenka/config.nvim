@@ -8,7 +8,7 @@ cfg.pack_add({
   end,
   keys = {
     {
-      "<leader>ls",
+      "s",
       function()
         require("flash").jump()
       end,

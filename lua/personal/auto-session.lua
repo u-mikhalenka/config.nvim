@@ -2,6 +2,7 @@ local cfg = require("personal.utils.config")
 
 cfg.pack_add({
   src = "https://github.com/rmagatti/auto-session",
+  enabled = false,
   setup = function()
     require("auto-session").setup({
       auto_restore = true,
