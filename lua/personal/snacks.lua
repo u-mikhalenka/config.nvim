@@ -145,6 +145,8 @@ cfg.pack_add({
           preset = "vertical",
         },
         sources = {
+          grep = { regex = false },
+          grep_buffers = { regex = false },
           files = {
             hidden = true,
           },

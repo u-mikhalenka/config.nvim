@@ -9,11 +9,11 @@
       "src": "https://github.com/rmagatti/auto-session"
     },
     "blink.cmp": {
-      "rev": "101d71861f6a012f2be80e4100720874330d86aa",
+      "rev": "49d39fda6350d7f789d1da1053e86c9e256f8108",
       "src": "https://github.com/Saghen/blink.cmp"
     },
     "blink.lib": {
-      "rev": "c8fdc12c8a2fab6cf786dd7141a283f8079f902b",
+      "rev": "f55df8a6e0a7acccf45ef0ffbb4ce46110fcf7d0",
       "src": "https://github.com/saghen/blink.lib"
     },
     "bufferline.nvim": {
@@ -25,11 +25,11 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "diffview-plus.nvim": {
-      "rev": "43e60bca414e4991ed10118e59f809fb03bbeddd",
+      "rev": "4e3a2f26b95c581275621ddbf01ca9f9376fa250",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
     },
     "fff": {
-      "rev": "c642d0743da5b830e22b3aefa2977c366604950e",
+      "rev": "d84c0a10cd5ea23285cb5575fa90179f51710f99",
       "src": "https://github.com/dmtrKovalenko/fff"
     },
     "flash.nvim": {
@@ -66,7 +66,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "0caecdd7408bc0a77697a83b931c742fcc5b0349",
+      "rev": "ee23d71c02440668cbca5b0cd8640d79d5bc250b",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim": {
@@ -78,7 +78,7 @@
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "af9adce488c75ca0a81017945c2b7fa7b461bc23",
+      "rev": "615d7b2712efb2f530a83a9d0466acafba6b1d6f",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
@@ -86,11 +86,11 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "8b98b4470eb326f1c7b50dae79f8c963568e5720",
+      "rev": "0d0969030ad955b510d7c8012b40252a25c12a6d",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "898ee307df58f854d11cd7edd06472574d48014e",
+      "rev": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "nvim-ts-autotag": {
@@ -98,7 +98,7 @@
       "src": "https://github.com/windwp/nvim-ts-autotag"
     },
     "nvim-web-devicons": {
-      "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
+      "rev": "5f032a85be210cd1c6ac98861eb3b187ff3bd5eb",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
