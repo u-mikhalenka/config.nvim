@@ -150,3 +150,25 @@ cfg.pack_add({
     -- vim.lsp.enable("cspell_ls")
   end,
 })
+
+cfg.pack_add({
+  src = "https://github.com/codethread/qmk.nvim",
+  setup = function()
+    require("qmk").setup({
+      name = "LAYOUT_bfo9000", -- identify your layout name
+      comment_preview = {
+        keymap_overrides = {
+          HERE_BE_A_LONG_KEY = "Magic", -- replace any long key codes
+        },
+      },
+      layout = { -- create a visual representation of your final layout
+        "x x x x x x x x x _ x x x x x x x x x",
+        "x x x x x x x x x _ x x x x x x x x x",
+        "x x x x x x x x x _ x x x x x x x x x",
+        "x x x x x x x x x _ x x x x x x x x x",
+        "x x x x x x x x x _ x x x x x x x x x",
+        "x x x x x x x x x _ x x x x x x x x x",
+      },
+    })
+  end,
+})
